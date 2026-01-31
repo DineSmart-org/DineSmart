@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "UI_feature_**"
+      - "DB_feature_**"
+      - "API_feature_**"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "install"
+      - run: echo "unit tests"
+      - run: echo "build"

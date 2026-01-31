@@ -1,0 +1,35 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Where do you want to deploy?"
+        required: true
+        type: choice
+        options:
+          - DS1
+          - Automation
+          - Production
+      ref:
+        description: "Branch or commit SHA to deploy (default: the branch you ran this from)"
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.target_env }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref != '' && inputs.ref || github.ref }}
+
+      - name: Build
+        run: echo "build here"
+
+      - name: Deploy
+        run: ./scripts/deploy.sh "${{ inputs.target_env }}"
