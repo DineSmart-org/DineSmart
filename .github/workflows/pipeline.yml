@@ -1,10 +1,10 @@
-name: DS1 -> Automation -> Production
+name: DS1 -> Automation -> Production (gated)
 
 on:
   push:
     branches:
       - "**"
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   deploy_ds1:
@@ -13,7 +13,8 @@ jobs:
       name: DS1
     steps:
       - uses: actions/checkout@v4
-      - run: echo "DS1 step: deploy"
+      - name: DS1 placeholder
+        run: echo "Deploying $GITHUB_SHA to DS1"
 
   deploy_automation:
     needs: deploy_ds1
@@ -22,7 +23,8 @@ jobs:
       name: Automation
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Automation step: deploy + tests"
+      - name: Automation placeholder
+        run: echo "Deploying $GITHUB_SHA to Automation"
 
   deploy_production:
     needs: deploy_automation
@@ -31,4 +33,5 @@ jobs:
       name: Production
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Production step: deploy"
+      - name: Production placeholder
+        run: echo "Deploying $GITHUB_SHA to Production"
